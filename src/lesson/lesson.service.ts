@@ -68,6 +68,8 @@ export class LessonService {
       )
       .then((value: LessonDetail[]) => value)
       .catch((e) => {
+        console.log(e);
+
         return null;
       });
   }
