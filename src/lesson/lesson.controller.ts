@@ -28,6 +28,12 @@ export class LessonController {
   create(@Body() createLessonDto: CreateLessonDto[]) {
     return this.lessonService.create(createLessonDto);
   }
+  @Get('')
+  @UseGuards(JwtAuthGuards)
+  @Roles(Role.admin)
+  async findeDetail(): Promise<LessonDetail[] | null> {
+    return this.lessonService.findDetail();
+  }
   @Get('avg')
   @Roles(Role.admin)
   @UseGuards(JwtAuthGuards)
@@ -52,13 +58,6 @@ export class LessonController {
   @UseGuards(JwtAuthGuards)
   async countLesson(@Param('email') email: string): Promise<number> {
     return await this.lessonService.countLesson(email);
-  }
-
-  @Get('')
-  @UseGuards(JwtAuthGuards)
-  @Roles(Role.admin)
-  async findeDetail(): Promise<LessonDetail[] | null> {
-    return this.lessonService.findDetail();
   }
 
   @Delete(':id')
