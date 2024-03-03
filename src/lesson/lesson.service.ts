@@ -68,7 +68,7 @@ export class LessonService {
       )
       .then((value: LessonDetail[]) => value)
       .catch((e) => {
-        throw new BadRequestException('เกิดข้อผิดพลาดในการค้นหาข้อมูล');
+        return null;
       });
   }
 
