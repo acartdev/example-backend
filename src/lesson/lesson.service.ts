@@ -69,7 +69,7 @@ export class LessonService {
   async findDetail(): Promise<LessonDetail[] | null> {
     return await this.lessonRepositoy
       .query(
-        `SELECT user.email,user.name,user.create_at,ROUND(AVG(TIMESTAMPDIFF(SECOND, user.create_at,send_at)) / 3600,0) as avgtime, (SELECT COUNT(user_email) FROM lesson WHERE text != '' AND user_email = user.email) as counter,MAX(lesson.send_at) as send_at FROM lesson  INNER JOIN user ON(user.email = lesson.user_email) GROUP BY user_email`,
+        `SELECT user.email,user.name,user.create_at,(AVG(TIMESTAMPDIFF(SECOND, user.create_at,send_at)) / 3600) as avgtime, (SELECT COUNT(user_email) FROM lesson WHERE text != '' AND user_email = user.email) as counter,MAX(lesson.send_at) as send_at FROM lesson  INNER JOIN user ON(user.email = lesson.user_email) GROUP BY user_email`,
       )
       .then((value: LessonDetail[]) => value)
       .catch((e) => {
