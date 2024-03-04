@@ -28,7 +28,12 @@ export class LessonService {
   async create(createLessonDto: CreateLessonDto[]): Promise<any> {
     try {
       for (let lesson of createLessonDto) {
-        this.lessonRepositoy.save(lesson);
+        this.lessonRepositoy.save({
+          lesson_id: lesson.lesson_id,
+          user_email: lesson.user_email,
+          lang: lesson.lang,
+          text: lesson.text,
+        });
       }
       return new HttpException('ส่งแบบทดสอบสำเร็จ!', 201);
     } catch (e) {

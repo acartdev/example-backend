@@ -24,7 +24,7 @@ export class Lesson {
   @JoinColumn({ name: 'user_email' })
   user_email: User;
 
-  @Column()
+  @Column({ default: 'Text' })
   lang: string;
 
   @Column({ type: 'text' })
