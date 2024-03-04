@@ -3,8 +3,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import * as bcypt from 'bcrypt';
+import { Role } from './entities/userType';
 
 @Injectable()
 export class UsersService {
@@ -27,7 +28,9 @@ export class UsersService {
     }
   }
   async countUser(): Promise<number | null> {
-    return await this.userRepository.count();
+    return await this.userRepository.count({
+      where: { role: Not(Role.admin) },
+    });
   }
   async updateStatus(email: string): Promise<boolean> {
     const res = await this.userRepository.update(email, { isActive: true });
